@@ -88,6 +88,25 @@ module.exports = async(conn, msg, m, setting) => {
 				fs.writeFileSync(path_file, buffer)
 			}
 		}
+		const sendFileFromUrl = async (from, url, caption, options = {}) => {
+		    let mime = '';
+		    let res = await axios.head(url)
+		    mime = read.headerd["content-type"]
+		    let type = mime.split("/")[0]+"Message"
+		    if (mime.split("/")[0] === "image") {
+		       var img = await getBuffer(url)
+		       return conn.sendMessage(from, { image: img, caption: caption }, options)
+		    } else if (mime.split("/")[0] === "video") {
+		       var vid = await getBuffer(url)
+		       return conn.sendMessage(from, { video: vid, caption: caption }, options)
+		    } else if (mime.split("/")[0] === "audio") {
+		       var aud = await getBuffer(url)
+		       return conn.sendMessage(from, { audio: aud, mimetype: 'audio/mp3' }, options)
+		    } else {
+		       var doc = await getBuffer(url)
+		       return conn.sendMessage(from, { document: doc, mimetype: mime, caption: caption }, options)
+		    }
+		}
 		const isUrl = (url) => {
 			return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
 		}
