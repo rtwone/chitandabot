@@ -278,7 +278,7 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 			    reply(mess.wait)
 			    xfar.Instagram(args[1]).then( data => {
 			      var teks = `*Instagram Downloader*\n\n*≻ Title :* ${data.title}\n*≻ Jumlah Media :* ${data.medias.length}\n*≻ Url Source :* ${data.url}\n\n_wait a minute sending media..._`
-			      reply(teks).then( res => {
+			      reply(teks)
 			       for (let i of data.medias) {
 				 if (i.extension === "mp4") {
 				   conn.sendMessage(from, { video: { url: i.url }})
@@ -286,7 +286,6 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 				   conn.sendMessage(from, { image: { url: i.url }})
 			         }
 			       }
-			      })
 			    }).catch(() => reply(mess.error.api))
 			    break
 			default:
