@@ -265,6 +265,7 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 			    hxz.ttdownloader(args[1]).then( data => {
 			      conn.sendMessage(from, { video: { url: data.nowm }}, { quoted: msg })
 			    }).catch(() => reply(mess.error.api))
+			    break
 			case prefix+'tiktokaudio':
 			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
 			    if (!isUrl(args[1])) return reply(mess.error.Iv)
@@ -273,6 +274,7 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 			    hxz.ttdownloader(args[1]).then( data => {
 			      conn.sendMessage(from, { audio: { url: data.nowm }, mimetype: 'audio/mp4' }, { quoted: msg })
 			    }).catch(() => reply(mess.error.api))
+		            break
 			case prefix+'ytmp4': case prefix+'mp4':
 			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
 			    if (!isUrl(args[1])) return reply(mess.error.Iv)
