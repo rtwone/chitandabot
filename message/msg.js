@@ -114,10 +114,6 @@ module.exports = async(conn, msg, m, setting) => {
 			return conn.sendMessage(from, { contacts: { displayName: name, contacts: [{ vcard }] }, mentions : mn ? mn : []},{ quoted: quoted })
 		}
 		
-		String.prototype.kapitalis = function() {
-          return this.charAt(0).toUpperCase() + this.slice(1);
-        }
-		
 		const templateButtons = [
 			{ callButton: {displayText: `Call Owner!`, phoneNumber: `+6285791458996`} },
 			{ urlButton: { displayText: `Star & Fork in Github!`, url : `https://github.com/rtwone/WaBot-MD`} },
@@ -229,6 +225,7 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
 			    if (!isUrl(args[1])) return reply(mess.error.Iv)
 			    if (!args[1].includes('tiktok')) return reply(mess.error.Iv)
+			    reply(mess.wait)
 			    xfar.Tiktok(args[1]).then( data => {
 			      conn.sendMessage(from, { video: { url: data.medias[0].url }, caption: data.title }, { quoted: msg })
 			    }).catch(() => reply(mess.error.api))
