@@ -11,6 +11,7 @@ exports.allmenu = (conn, prefix, pushname) => {
 ≻ ${prefix}ytmp4
 ≻ ${prefix}ytmp3
 ≻ ${prefix}instagram
+≻ ${prefix}facebook
 
 fitur lainnya masih dalam tahap pengembangan, request fitur chat ${prefix}owner
     `
