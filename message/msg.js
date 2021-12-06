@@ -238,7 +238,7 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 			    reply(mess.wait)
 			    xfar.Youtube(args[1]).then( data => {
 			      var teks = `*Youtube Video Downloader*\n\n*≻ Title :* ${data.title}\n*≻ Quality :* ${data.medias[1].quality}\n*≻ Size :* ${data.medias[1].formattedSize}\n*≻ Url Source :* ${data.url}\n\n_wait a minute sending media..._`
-			      conn.sendMessage(from, { video: { url: data.medias[1].url }, caption: teks, { quoted: msg })
+			      conn.sendMessage(from, { video: { url: data.medias[1].url }, caption: teks }, { quoted: msg })
 			    }).catch(() => reply(mess.error.api))
 			    break
 			default:
