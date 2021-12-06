@@ -234,11 +234,21 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 			case prefix+'ytmp4': case prefix+'mp4':
 			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
 			    if (!isUrl(args[1])) return reply(mess.error.Iv)
-			    if (!args[1].includes('youtu.be') || !args[1].includes('youtube.com')) return reply(mess.error.Iv)
+			    if (!args[1].includes('youtu.be') && !args[1].includes('youtube.com')) return reply(mess.error.Iv)
 			    reply(mess.wait)
 			    xfar.Youtube(args[1]).then( data => {
 			      var teks = `*Youtube Video Downloader*\n\n*≻ Title :* ${data.title}\n*≻ Quality :* ${data.medias[1].quality}\n*≻ Size :* ${data.medias[1].formattedSize}\n*≻ Url Source :* ${data.url}\n\n_wait a minute sending media..._`
 			      conn.sendMessage(from, { video: { url: data.medias[1].url }, caption: teks }, { quoted: msg })
+			    }).catch(() => reply(mess.error.api))
+			    break
+			case prefix+'ytm3': case prefix+'mp3':
+			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
+			    if (!isUrl(args[1])) return reply(mess.error.Iv)
+			    if (!args[1].includes('youtu.be') && !args[1].includes('youtube.com')) return reply(mess.error.Iv)
+			    reply(mess.wait)
+			    xfar.Youtube(args[1]).then( data => {
+			      var teks = `*Youtube Video Downloader*\n\n*≻ Title :* ${data.title}\n*≻ Quality :* ${data.medias[7].quality}\n*≻ Size :* ${data.medias[7].formattedSize}\n*≻ Url Source :* ${data.url}\n\n_wait a minute sending media..._`
+			      conn.sendMessage(from, { audio: { url: data.medias[7].url }}, { quoted: msg })
 			    }).catch(() => reply(mess.error.api))
 			    break
 			default:
