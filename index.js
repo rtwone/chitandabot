@@ -23,14 +23,14 @@ const { state, saveState } = useSingleFileAuthState(session)
 
 function title() {
 	console.clear()
-	console.log(chalk.bold.green(figlet.textSync('WabotMD', {
+	console.log(chalk.bold.green(figlet.textSync('WaBot MD', {
 		font: 'Ghost',
 		horizontalLayout: 'default',
 		verticalLayout: 'default',
 		width: 80,
 		whitespaceBreak: false
 	})))
-	console.log(chalk.yellow(`\n                        ${chalk.yellow('[ Created By Febb ]')}\n\n${chalk.red('Kinky Bot')} : ${chalk.white('WhatsApp Bot Multi Device')}\n${chalk.red('Follow Insta Dev')} : ${chalk.white('@febbyadityan')}\n${chalk.red('Message Me On WhatsApp')} : ${chalk.white('+62 857-7026-9605')}\n${chalk.red('Donate')} : ${chalk.white('085770269605 ( Gopay/Dana )')}\n`))
+	console.log(chalk.yellow(`\n                        ${chalk.yellow('[ Created By Irfan ]')}\n\n${chalk.red('Chitanda Eru Bot')} : ${chalk.white('WhatsApp Bot Multi Device')}\n${chalk.red('Follow Insta Dev')} : ${chalk.white('@yannnnn.zz_')}\n${chalk.red('Message Me On WhatsApp')} : ${chalk.white('+62 857-9145-8996')}\n${chalk.red('Donate')} : ${chalk.white('085791458996 ( Gopay/Pulsa )')}\n`))
 }
 
 /**
@@ -65,7 +65,7 @@ const starting = new Spinner(chalk.cyan(` Preparing After Connect`))
 const reconnect = new Spinner(chalk.redBright(` Reconnecting WhatsApp Bot`))
 
 const connectToWhatsApp = async () => {
-	const client = makeWASocket({ printQRInTerminal: true, logger: logg({ level: 'fatal' }), auth: state })
+	const conn = makeWASocket({ printQRInTerminal: true, logger: logg({ level: 'fatal' }), auth: state })
 	title()
 	
 	/* Auto Update */
@@ -76,15 +76,15 @@ const connectToWhatsApp = async () => {
 	nocache('./lib/myfunc', module => console.log(chalk.greenBright('[ WHATSAPP BOT ]  ') + time + chalk.cyanBright(` "${module}" Telah diupdate!`)))
 	nocache('./message/msg', module => console.log(chalk.greenBright('[ WHATSAPP BOT ]  ') + time + chalk.cyanBright(` "${module}" Telah diupdate!`)))
 	
-	client.multi = true
-	client.nopref = false
-	client.prefa = 'anjing'
-	client.ev.on('messages.upsert', async m => {
+	conn.multi = true
+	conn.nopref = false
+	conn.prefa = 'anjing'
+	conn.ev.on('messages.upsert', async m => {
 		if (!m.messages) return;
 		const msg = m.messages[0]
-		require('./message/msg')(client, msg, m, setting)
+		require('./message/msg')(conn, msg, m, setting)
 	})
-	client.ev.on('connection.update', (update) => {
+	conn.ev.on('connection.update', (update) => {
 		const { connection, lastDisconnect } = update
 		if (connection === 'close') {
 			status.stop()
@@ -96,8 +96,8 @@ const connectToWhatsApp = async () => {
 			: console.log(mylog('Wa web terlogout...'))
 		}
 	})
-	client.ev.on('creds.update', () => saveState)
-	return client
+	conn.ev.on('creds.update', () => saveState)
+	return conn
 }
 
 connectToWhatsApp()
