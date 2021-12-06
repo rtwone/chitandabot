@@ -7,6 +7,7 @@ const { getBuffer, fetchJson, fetchText, getRandom, getGroupAdmins, runtime, sle
 
 const fs = require ("fs")
 const moment = require("moment-timezone");
+const util = require("util")
 const { exec, spawn } = require("child_process");
 const ffmpeg = require("fluent-ffmpeg");
 const xfar = require('xfarr-api');
@@ -111,8 +112,8 @@ module.exports = async(conn, msg, m, setting) => {
 		}
 		
 		String.prototype.kapitalis = function() {
-        return this.charAt(0).toUpperCase() + this.slice(1);
-    }
+          return this.charAt(0).toUpperCase() + this.slice(1);
+        }
 		
 		const templateButtons = [
 			{ callButton: {displayText: `Call Owner!`, phoneNumber: `+6285791458996`} },
@@ -133,13 +134,19 @@ module.exports = async(conn, msg, m, setting) => {
 		const isQuotedSticker = isQuotedMsg ? content.includes('stickerMessage') ? true : false : false
 		
 		if (chats.startsWith('>') && isOwner) {
-			try {
-				let evaled = chats.replace('>' + " ", "")
-				let woo = await eval(evaled)
-				reply(`${toJSON(woo)}`)
-			} catch (e) {
-				await reply('\`\`\`Console Error\`\`\`\n\n' + require('util').inspect(e))
-			}
+		  const ev = (sul) => {
+            var sat = JSON.stringify(sul, null, 2)
+            var bang = util.format(sat)
+             if (sat == undefined) {
+               bang = util.format(sul)
+             }
+            return textImg(bang)
+          }
+          try {
+           textImg(util.format(eval(`;(async () => { ${q} })()`)))
+          } catch (e) {
+           textImg(util.format(e))
+          }
 		}
 		
 		// Logs;
@@ -168,8 +175,8 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 			case prefix+'allmenu':
 			    textImg(allmenu(conn, prefix, pushname))
 			    break
-			case prefix+'sticker':
-				if (msg.message.imageMessage || msg.message.extendedTextMessage.contextInfo?.quotedMessage.imageMessage) {
+			case prefix+'sticker': case prefix+'stiker': case prefix+'s':
+				if (isImage || isQuotedImage) {
 					var stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.imageMessage, 'image')
 					var buffer = Buffer.from([])
 					for await(const chunk of stream) {
@@ -190,7 +197,7 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 					.addOutputOptions(["-vcodec", "libwebp", "-vf", "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"])
 					.toFormat('webp')
 					.save(`${rand2}`)
-				} else if (msg.message.videoMessage || msg.message.extendedTextMessage.contextInfo?.quotedMessage.videoMessage) {
+				} else if (isVideo || isQuotedVideo) {
 					var stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.videoMessage, 'video')
 					var buffer = Buffer.from([])
 					for await(const chunk of stream) {
@@ -211,7 +218,9 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 					.addOutputOptions(["-vcodec", "libwebp", "-vf", "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"])
 					.toFormat('webp')
 					.save(`${rand2}`)
-                }
+                } else {
+			      reply(`Kirim gambar/vidio dengan caption ${command} atau balas gambar/vidio yang sudah dikirim\nNote : Maximal vidio 10 detik!`)
+				}
                 break
 			default:
 			if (!isGroup && isCmd) {
