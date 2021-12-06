@@ -4,6 +4,7 @@ exports.allmenu = (conn, prefix, pushname) => {
 ≻ ${prefix}menu
 ≻ ${prefix}donasi
 ≻ ${prefix}sticker
+≻ ${prefix}tiktok
 
 fitur lainnya masih dalam tahap pengembangan, request fitur chat ${prefix}owner
     `
