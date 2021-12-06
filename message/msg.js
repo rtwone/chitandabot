@@ -189,7 +189,7 @@ module.exports = async(conn, msg, m, setting) => {
 			case prefix+'help':
 				buttonWithText(from, `Hai ${pushname !== undefined ? pushname : 'Kak'} ${ucapanWaktu}, Aku adalah *${botName}*
 				
-Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot ini, silahkan lapor kepada ${prefix}owner`, `WhatsApp Bot © 2020`, templateButtons)
+Bot ini adalah Beta *Multi-Device* WhatsApp. Jika menemukan bug/eror pada bot ini, silahkan lapor kepada ${prefix}owner`, `WhatsApp Bot © 2020`, templateButtons)
 				break
 			case prefix+'allmenu':
 			    textImg(allmenu(conn, prefix, pushname))
@@ -311,6 +311,15 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 				   conn.sendMessage(from, { image: { url: i.url }})
 			         }
 			       }
+			    }).catch(() => reply(mess.error.api))
+			    break
+			case prefix+'facebook': case prefix+'fbdl':
+			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
+			    if (!isUrl(args[1])) return reply(mess.error.Iv)
+			    if (!args[1].includes('facebook.com')) return reply(mess.error.Iv)
+			    reply(mess.wait)
+			    xfar.Facebook(args[1]).then( data => {
+			      conn.sendMessage(from, { video: { url: data.medias[0].url }, caption: data.title }, { quoted: msg })
 			    }).catch(() => reply(mess.error.api))
 			    break
 			default:
