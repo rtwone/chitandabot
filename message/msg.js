@@ -5,14 +5,14 @@ const {
 const { color, bgcolor } = require('../lib/color')
 const { getBuffer, fetchJson, fetchText, getRandom, getGroupAdmins, runtime, sleep } = require("../lib/myfunc");
 
-const fs = require ("fs");
+const fs = require ("fs")
 const moment = require("moment-timezone");
-const util = require("util");
+const util = require("util")
 const { exec, spawn } = require("child_process");
 const ffmpeg = require("fluent-ffmpeg");
 const xfar = require('xfarr-api');
-const axios = require('axios');
-const hxz = require("hxz-api");
+const axios = require('axios')
+const hxz = require("hxz-api")
 
 // Database
 let mess = JSON.parse(fs.readFileSync('./message/response.json'));
