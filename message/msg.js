@@ -271,6 +271,22 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 			      conn.sendMessage(from, { audio: { url: data.medias[7].url }}, { quoted: msg })
 			    }).catch(() => reply(mess.error.api))
 			    break
+			case prefix+'igdl': case prefix+'instagram': case prefix+'ig':
+			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
+			    if (!isUrl(args[1])) return reply(mess.error.Iv)
+			    if (!args[1].includes('instagram.com')) return reply(mess.error.Iv)
+			    reply(mess.wait)
+			    xfar.Instagram(args[1]).then( data => {
+			      var teks = `*Instagram Downloader*\n\n*≻ Title :* ${data.title}\n*≻ Jumlah Media :* ${data.medias.length}\n*≻ Url Source :* ${data.url}\n\n_wait a minute sending media..._`
+			      for (let i of data.medias) {
+				 if (i.extension === "mp4") {
+				   conn.sendMessage(from, { video: { url: i.url }})
+				 } else if (i.extension === "jpg") {
+				   conn.sendMessage(from, { image, { url: i.url }})
+			         }
+			      }
+			    }).catch(() => reply(mess.error.api))
+			    break
 			default:
 			if (!isGroup && isCmd) {
 				reply(`Command belum tersedia, coba beberapa hari kedepan yaa! _^`)
