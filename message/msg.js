@@ -8,6 +8,7 @@ const { getBuffer, fetchJson, fetchText, getRandom, getGroupAdmins, runtime, sle
 const fs = require ("fs")
 const moment = require("moment-timezone");
 const { exec, spawn } = require("child_process");
+const ffmpeg = require("fluent-ffmpeg");
 const xfar = require('xfarr-api');
 const axios = require('axios')
 
@@ -16,8 +17,9 @@ moment.tz.setDefault("Asia/Jakarta").locale("id");
 module.exports = async(conn, msg, m, setting) => {
 	try {
 		let { ownerNumber, botName } = setting
+		let { allmenu } = require('./help')
 		const jam = moment.tz('asia/jakarta').format('HH:mm:ss')
-		const ucapanWaktu = 'Selamat '+moment(Date.now()).tz('Asia/Jakarta').locale('id').format('a').kapitalis()
+		const ucapanWaktu = 'Selamat '+moment(Date.now()).tz('Asia/Jakarta').locale('id').format('a')
 		const type = Object.keys(msg.message)[0]
 		const content = JSON.stringify(msg.message)
 		const fromMe = msg.key.fromMe
@@ -88,6 +90,9 @@ module.exports = async(conn, msg, m, setting) => {
 		const reply = (teks) => {
 			conn.sendMessage(from, { text: teks }, { quoted: msg })
 		}
+		const textImg = (teks) => {
+			return conn.sendMessage(from, { text: teks, jpegThumbnail: fs.readFileSync(setting.pathimg) }, { quoted: msg })
+		}
 		const sendMess = (hehe, teks) => {
 			conn.sendMessage(hehe, { text, teks })
 		}
@@ -114,7 +119,7 @@ module.exports = async(conn, msg, m, setting) => {
 			{ urlButton: { displayText: `Star & Fork in Github!`, url : `https://github.com/rtwone/WaBot-MD`} },
 			{ quickReplyButton: { displayText: `🧑 Owner`, id: `${prefix}owner` } },
 			{ quickReplyButton: { displayText: `💰 Donasi`, id: `${prefix}donate` } },
-			{ quickReplyButton: { displayText: `🧬 Test Respon Bot`, id: `${prefix}test` } }
+			{ quickReplyButton: { displayText: `📋 All Menu`, id: `${prefix}allmenu` } }
 		]
         
 		const isImage = (type == 'imageMessage')
@@ -138,8 +143,8 @@ module.exports = async(conn, msg, m, setting) => {
 		}
 		
 		// Logs;
-		if (!isGroup && isCmd) console.log('->[\x1b[1;32mCMD\x1b[1;37m]', color(moment(msg.messageTimestamp * 1000).format('DD/MM/YYYY HH:mm:ss'), 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushName))
-		if (isGroup && isCmd) console.log('->[\x1b[1;32mCMD\x1b[1;37m]', color(moment(msg.messageTimestamp *1000).format('DD/MM/YYYY HH:mm:ss'), 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushName), 'in', color(groupName))
+		if (!isGroup && isCmd) console.log('->[\x1b[1;32mCMD\x1b[1;37m]', color(moment(msg.messageTimestamp * 1000).format('DD/MM/YYYY HH:mm:ss'), 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushname))
+		if (isGroup && isCmd) console.log('->[\x1b[1;32mCMD\x1b[1;37m]', color(moment(msg.messageTimestamp *1000).format('DD/MM/YYYY HH:mm:ss'), 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushname), 'in', color(groupName))
 		
 		switch(command) {
 			case prefix+'test':
@@ -156,48 +161,52 @@ module.exports = async(conn, msg, m, setting) => {
 				break
 			case prefix+'menu':
 			case prefix+'help':
-				buttonWithText(from, `Heyyyoooo *${pushname}* 🐨
-
-≻ ${prefix}test
-≻ ${prefix}sticker
-
-Fitur lainnya masih tahap pengembangan_^`, `WhatsApp Bot © 2020`, templateButtons)
+				buttonWithText(from, `Hai ${pushname !== undefined ? pushname : 'Kak'} ${ucapanWaktu}, Aku adalah *${botName}*
+				
+Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot ini, silahkan lapor kepada ${prefix}owner`, `WhatsApp Bot © 2020`, templateButtons)
 				break
+			case prefix+'allmenu':
+			    textImg(allmenu(conn, prefix, pushname))
+			    break
 			case prefix+'sticker':
 				if (msg.message.imageMessage || msg.message.extendedTextMessage.contextInfo?.quotedMessage.imageMessage) {
-					stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.imageMessage, 'image')
-					buffer = Buffer.from([])
+					var stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.imageMessage, 'image')
+					var buffer = Buffer.from([])
 					for await(const chunk of stream) {
 						buffer = Buffer.concat([buffer, chunk])
 					}
-					rand1 = getRandom('.jpg')
-					rand2 = getRandom('.webp')
+					var rand1 = 'sticker/'+getRandom('.jpg')
+					var rand2 = 'sticker/'+getRandom('.webp')
 					fs.writeFileSync(`./${rand1}`, buffer)
 					ffmpeg(`./${rand1}`)
 					.on("error", console.error)
 					.on("end", () => {
-						conn.sendMessage(from, { sticker: fs.readFileSync(`./${rand2}`) })
+					  exec(`webpmux -set exif ./sticker/data.exif ./${rand2} -o ./${rand2}`, async (error) => {
+						conn.sendMessage(from, { sticker: fs.readFileSync(`./${rand2}`) }, { quoted: msg })
 						fs.unlinkSync(`./${rand1}`)
 						fs.unlinkSync(`./${rand2}`)
+					  })
 					})
 					.addOutputOptions(["-vcodec", "libwebp", "-vf", "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"])
 					.toFormat('webp')
 					.save(`${rand2}`)
 				} else if (msg.message.videoMessage || msg.message.extendedTextMessage.contextInfo?.quotedMessage.videoMessage) {
-					stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.videoMessage, 'video')
-					buffer = Buffer.from([])
+					var stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.videoMessage, 'video')
+					var buffer = Buffer.from([])
 					for await(const chunk of stream) {
 						buffer = Buffer.concat([buffer, chunk])
 					}
-					rand1 = getRandom('.mp4')
-					rand2 = getRandom('.webp')
+					var rand1 = 'sticker/'+getRandom('.mp4')
+					var rand2 = 'sticker/'+getRandom('.webp')
 					fs.writeFileSync(`./${rand1}`, buffer)
 					ffmpeg(`./${rand1}`)
 					.on("error", console.error)
 					.on("end", () => {
-						conn.sendMessage(from, { sticker: fs.readFileSync(`./${rand2}`) })
+					  exec(`webpmux -set exif ./sticker/data.exif ./${rand2} -o ./${rand2}`, async (error) => {
+						conn.sendMessage(from, { sticker: fs.readFileSync(`./${rand2}`) }, { quoted: msg })
 						fs.unlinkSync(`./${rand1}`)
 						fs.unlinkSync(`./${rand2}`)
+					  })
 					})
 					.addOutputOptions(["-vcodec", "libwebp", "-vf", "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"])
 					.toFormat('webp')
