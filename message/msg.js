@@ -248,9 +248,23 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 			    if (!args[1].includes('tiktok')) return reply(mess.error.Iv)
 			    reply(mess.wait)
 			    xfar.Tiktok(args[1]).then( data => {
-			      conn.sendMessage(from, { video: { url: data.medias[0].url }, caption: data.title }, { quoted: msg })
+			      conn.sendMessage(from, {
+				 video: { url: data.medias[0].url },
+				 caption: `${data.title}\n\nKamu bisa mengubahnya menjadi Vidio Tanpa Watermark atau Audio, pencet tombol dibawah untuk mengubahnya!`,
+				 buttons: [{buttonId: `${prefix}tiktoknowm ${args[1]}`, buttonText: { displayText: "Without Watermark" }, type: 1 },
+					   {buttonId: `${prefix}tiktokaudio ${args[1]}`, buttonText: { displayText: "Audio" }, type: 1 }]
+				 footer: "Create by @yannnnn.zz_"
+			      }, { quoted: msg })
 			    }).catch(() => reply(mess.error.api))
 			    break
+			case prefix+'tiktoknowm':
+			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
+			    if (!isUrl(args[1])) return reply(mess.error.Iv)
+			    if (!args[1].includes('tiktok')) return reply(mess.error.Iv)
+			    reply(mess.wait)
+			    hxz.ttdownloader(args[1]).then( data => {
+			      conn.sendMessage(from, { video: { url: data.nowm }}, { quoted: msg })
+			    })
 			case prefix+'ytmp4': case prefix+'mp4':
 			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
 			    if (!isUrl(args[1])) return reply(mess.error.Iv)
