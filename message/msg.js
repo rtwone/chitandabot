@@ -24,7 +24,8 @@ module.exports = async(conn, msg, m, setting) => {
 		let { ownerNumber, botName } = setting
 		let { allmenu } = require('./help')
 		const jam = moment.tz('asia/jakarta').format('HH:mm:ss')
-		const ucapanWaktu = 'Selamat '+moment(Date.now()).tz('Asia/Jakarta').locale('id').format('a')
+		let dt = moment(Date.now()).tz('Asia/Jakarta').locale('id').format('a')
+		const ucapanWaktu = "Selamat "+dt.charAt(0).toUpperCase() + dt.slice(1)
 		const type = Object.keys(msg.message)[0]
 		const content = JSON.stringify(msg.message)
 		const fromMe = msg.key.fromMe
