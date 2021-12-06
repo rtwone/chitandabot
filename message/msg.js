@@ -91,7 +91,7 @@ module.exports = async(conn, msg, m, setting) => {
 		const sendFileFromUrl = async (from, url, caption, options = {}) => {
 		    let mime = '';
 		    let res = await axios.head(url)
-		    mime = read.headerd["content-type"]
+		    mime = res.headerd["content-type"]
 		    let type = mime.split("/")[0]+"Message"
 		    if (mime.split("/")[0] === "image") {
 		       var img = await getBuffer(url)
