@@ -13,6 +13,9 @@ const ffmpeg = require("fluent-ffmpeg");
 const xfar = require('xfarr-api');
 const axios = require('axios')
 
+// Database
+let mess = JSON.parse(fs.readFileSync('./message/response.json'));
+
 moment.tz.setDefault("Asia/Jakarta").locale("id");
 
 module.exports = async(conn, msg, m, setting) => {
@@ -135,18 +138,18 @@ module.exports = async(conn, msg, m, setting) => {
 		
 		if (chats.startsWith('>') && isOwner) {
 		  const ev = (sul) => {
-            var sat = JSON.stringify(sul, null, 2)
-            var bang = util.format(sat)
-             if (sat == undefined) {
-               bang = util.format(sul)
-             }
-            return textImg(bang)
-          }
-          try {
-           textImg(util.format(eval(`;(async () => { ${q} })()`)))
-          } catch (e) {
-           textImg(util.format(e))
-          }
+                   var sat = JSON.stringify(sul, null, 2)
+                   var bang = util.format(sat)
+                    if (sat == undefined) {
+                     bang = util.format(sul)
+                    }
+                   return textImg(bang)
+                  }
+                 try {
+                  textImg(util.format(eval(`;(async () => { ${q} })()`)))
+                 } catch (e) {
+                  textImg(util.format(e))
+                 }
 		}
 		
 		// Logs;
@@ -155,8 +158,8 @@ module.exports = async(conn, msg, m, setting) => {
 		
 		switch(command) {
 			case prefix+'test':
-				reply('Test, sukses respon!')
-				break
+		            reply('Test, sukses respon!')
+			    break
 			case prefix+'donate':
 			case prefix+'donasi':
 				reply(`──「 MENU DONATE 」──\n\nHi ${pushname} 👋🏻\n\`\`\`GOPAY : 085791458996\`\`\`\n\`\`\`PULSA : 085735338148 (Indosat)\`\`\`\nTerimakasih untuk kamu yang sudah donasi untuk perkembangan bot ini _^\n──「 THX FOR YOU ! 」──`)
@@ -176,52 +179,60 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 			    textImg(allmenu(conn, prefix, pushname))
 			    break
 			case prefix+'sticker': case prefix+'stiker': case prefix+'s':
-				if (isImage || isQuotedImage) {
-					var stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.imageMessage, 'image')
-					var buffer = Buffer.from([])
-					for await(const chunk of stream) {
-						buffer = Buffer.concat([buffer, chunk])
-					}
-					var rand1 = 'sticker/'+getRandom('.jpg')
-					var rand2 = 'sticker/'+getRandom('.webp')
-					fs.writeFileSync(`./${rand1}`, buffer)
-					ffmpeg(`./${rand1}`)
-					.on("error", console.error)
-					.on("end", () => {
-					  exec(`webpmux -set exif ./sticker/data.exif ./${rand2} -o ./${rand2}`, async (error) => {
-						conn.sendMessage(from, { sticker: fs.readFileSync(`./${rand2}`) }, { quoted: msg })
-						fs.unlinkSync(`./${rand1}`)
-						fs.unlinkSync(`./${rand2}`)
-					  })
-					})
-					.addOutputOptions(["-vcodec", "libwebp", "-vf", "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"])
-					.toFormat('webp')
-					.save(`${rand2}`)
-				} else if (isVideo || isQuotedVideo) {
-					var stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.videoMessage, 'video')
-					var buffer = Buffer.from([])
-					for await(const chunk of stream) {
-						buffer = Buffer.concat([buffer, chunk])
-					}
-					var rand1 = 'sticker/'+getRandom('.mp4')
-					var rand2 = 'sticker/'+getRandom('.webp')
-					fs.writeFileSync(`./${rand1}`, buffer)
-					ffmpeg(`./${rand1}`)
-					.on("error", console.error)
-					.on("end", () => {
-					  exec(`webpmux -set exif ./sticker/data.exif ./${rand2} -o ./${rand2}`, async (error) => {
-						conn.sendMessage(from, { sticker: fs.readFileSync(`./${rand2}`) }, { quoted: msg })
-						fs.unlinkSync(`./${rand1}`)
-						fs.unlinkSync(`./${rand2}`)
-					  })
-					})
-					.addOutputOptions(["-vcodec", "libwebp", "-vf", "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"])
-					.toFormat('webp')
-					.save(`${rand2}`)
-                } else {
-			      reply(`Kirim gambar/vidio dengan caption ${command} atau balas gambar/vidio yang sudah dikirim\nNote : Maximal vidio 10 detik!`)
-				}
-                break
+			    if (isImage || isQuotedImage) {
+		               var stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.imageMessage, 'image')
+			       var buffer = Buffer.from([])
+			       for await(const chunk of stream) {
+			          buffer = Buffer.concat([buffer, chunk])
+			       }
+			       var rand1 = 'sticker/'+getRandom('.jpg')
+			       var rand2 = 'sticker/'+getRandom('.webp')
+			       fs.writeFileSync(`./${rand1}`, buffer)
+			       ffmpeg(`./${rand1}`)
+				.on("error", console.error)
+				.on("end", () => {
+				  exec(`webpmux -set exif ./sticker/data.exif ./${rand2} -o ./${rand2}`, async (error) => {
+				    conn.sendMessage(from, { sticker: fs.readFileSync(`./${rand2}`) }, { quoted: msg })
+				    fs.unlinkSync(`./${rand1}`)
+			            fs.unlinkSync(`./${rand2}`)
+			          })
+				 })
+				.addOutputOptions(["-vcodec", "libwebp", "-vf", "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"])
+				.toFormat('webp')
+				.save(`${rand2}`)
+			     } else if (isVideo || isQuotedVideo) {
+				 var stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.videoMessage, 'video')
+				 var buffer = Buffer.from([])
+				 for await(const chunk of stream) {
+				   buffer = Buffer.concat([buffer, chunk])
+				 }
+			         var rand1 = 'sticker/'+getRandom('.mp4')
+				 var rand2 = 'sticker/'+getRandom('.webp')
+			         fs.writeFileSync(`./${rand1}`, buffer)
+			         ffmpeg(`./${rand1}`)
+				  .on("error", console.error)
+				  .on("end", () => {
+				    exec(`webpmux -set exif ./sticker/data.exif ./${rand2} -o ./${rand2}`, async (error) => {
+				      conn.sendMessage(from, { sticker: fs.readFileSync(`./${rand2}`) }, { quoted: msg })
+				      fs.unlinkSync(`./${rand1}`)
+				      fs.unlinkSync(`./${rand2}`)
+				    })
+				  })
+				 .addOutputOptions(["-vcodec", "libwebp", "-vf", "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"])
+				 .toFormat('webp')
+				 .save(`${rand2}`)
+                              } else {
+			        reply(`Kirim gambar/vidio dengan caption ${command} atau balas gambar/vidio yang sudah dikirim\nNote : Maximal vidio 10 detik!`)
+			      }
+                              break
+			case prefix+'tiktok':
+			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
+			    if (!isUrl(args[1])) return reply(mess.error.Iv)
+			    if (!args[1].includes('tiktok')) return reply(mess.error.Iv)
+			    xfar.Tiktok(args[1]).then( data => {
+			      conn.sendMessage(from, { video: { url: data.medias[0].url }, caption: data.title }, { quoted: msg })
+			    }).catch(() => reply(mess.error.api))
+			    break
 			default:
 			if (!isGroup && isCmd) {
 				reply(`Command belum tersedia, coba beberapa hari kedepan yaa! _^`)
