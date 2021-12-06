@@ -282,7 +282,7 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 				 if (i.extension === "mp4") {
 				   conn.sendMessage(from, { video: { url: i.url }})
 				 } else if (i.extension === "jpg") {
-				   conn.sendMessage(from, { image, { url: i.url }})
+				   conn.sendMessage(from, { image: { url: i.url }})
 			         }
 			      }
 			    }).catch(() => reply(mess.error.api))
