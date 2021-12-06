@@ -271,7 +271,7 @@ Bot ini adalah Beta *Multi-Device* WhastApp. Jika menemukan bug/eror pada bot in
 			    if (!args[1].includes('tiktok')) return reply(mess.error.Iv)
 			    reply(mess.wait)
 			    hxz.ttdownloader(args[1]).then( data => {
-			      conn.sendMessage(from, { audio: { url: data.audio }, mimetype: 'audio/mp4' }, { quoted: msg })
+			      conn.sendMessage(from, { audio: { url: data.nowm }, mimetype: 'audio/mp4' }, { quoted: msg })
 			    }).catch(() => reply(mess.error.api))
 			case prefix+'ytmp4': case prefix+'mp4':
 			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
