@@ -1,5 +1,5 @@
 {
-  "name": "termux-wabotmd",
+  "name": "WaBot-MD",
   "version": "0.0.1",
   "description": "Simple whatsapp bot with multi device.",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  "author": "febbyadityan",
+  "author": "irfanhariyanto",
   "license": "MIT",
   "dependencies": {
     "@adiwajshing/baileys-md": "github:adiwajshing/baileys#multi-device",
