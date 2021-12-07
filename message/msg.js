@@ -14,6 +14,7 @@ const ffmpeg = require("fluent-ffmpeg");
 const xfar = require('xfarr-api');
 const axios = require('axios')
 const hxz = require("hxz-api")
+const speed = require("performance-now")
 
 // Database
 let mess = JSON.parse(fs.readFileSync('./message/response.json'));
