@@ -1,10 +1,12 @@
 exports.allmenu = (conn, prefix, pushname) => {
     return `Hi ${pushname ? pushname : 'Kak'}, Berikut list menu yang tersedia di Bot ini!
 
-*More Features*
+*Converter / Tools*
 ≻ ${prefix}menu
 ≻ ${prefix}donasi
 ≻ ${prefix}sticker
+≻ ${prefix}toimg
+≻ ${prefix}tovid
 
 *Downloader*
 ≻ ${prefix}tiktok
