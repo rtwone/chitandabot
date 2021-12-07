@@ -4,7 +4,7 @@ const {
 } = require("@adiwajshing/baileys-md")
 const { color, bgcolor } = require('../lib/color')
 const { getBuffer, fetchJson, fetchText, getRandom, getGroupAdmins, runtime, sleep } = require("../lib/myfunc");
-const { webp2mp4File } require("../lib/convert")
+const { webp2mp4File } = require("../lib/convert")
 
 const fs = require ("fs")
 const moment = require("moment-timezone");
