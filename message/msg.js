@@ -195,6 +195,7 @@ Bot ini adalah Beta *Multi-Device* WhatsApp. Jika menemukan bug/eror pada bot in
 			case prefix+'allmenu':
 			    textImg(allmenu(conn, prefix, pushname))
 			    break
+	/*<------- Converter/Tools ------->*/
 			case prefix+'sticker': case prefix+'stiker': case prefix+'s':
 			    if (isImage || isQuotedImage) {
 		               var stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.imageMessage, 'image')
