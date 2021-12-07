@@ -4,6 +4,7 @@ const {
 } = require("@adiwajshing/baileys-md")
 const { color, bgcolor } = require('../lib/color')
 const { getBuffer, fetchJson, fetchText, getRandom, getGroupAdmins, runtime, sleep } = require("../lib/myfunc");
+const { webp2mp4File } require("../lib/convert")
 
 const fs = require ("fs")
 const moment = require("moment-timezone");
@@ -243,6 +244,31 @@ Bot ini adalah Beta *Multi-Device* WhatsApp. Jika menemukan bug/eror pada bot in
 			        reply(`Kirim gambar/vidio dengan caption ${command} atau balas gambar/vidio yang sudah dikirim\nNote : Maximal vidio 10 detik!`)
 			      }
                               break
+			case prefix+'toimg': case prefix+'toimage':
+			case prefix+'tovid': case prefix+'tovideo':
+			    var stream = await downloadContentFromMessage(msg.message.extendedTextMessage?.contextInfo.quotedMessage.stickerMessage, 'sticker')
+			    var buffer = Buffer.from([])
+			    for await(const chunk of stream) {
+			       buffer = Buffer.concat([buffer, chunk])
+			    }
+			    var rand1 = 'sticker/'+getRandom('.webp')
+			    var rand2 = 'sticker/'+getRandom('.png')
+			    fs.writeFileSync(`./${rand1}`, buffer)
+			    if (isQuotedSticker && msg.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage.isAnimated !== true) {
+			    exec(`ffmpeg -i ${rand1} ${rand2}`, (err) => {
+			      fs.unlinkSync(`./${rand1}`)
+			      if (err) return reply(mess.error.api)
+			      conn.sendMessage(from, { image: { url: `./${rand2}` }}, { quoted: msg })
+			      fs.unlinkSync(`./${rand2}`)
+			    })
+			    } else {
+			    reply(mess.wait)
+		            webp2mp4File(`./${rand1}`).then( data => {
+			      fs.unlinkSync(`./${rand1}`)
+			      conn.sendMessage(from, { video: { url: data.result }}, { quoted: msg })
+			    })
+			    }
+			    break
 	/*<-------- Downloader ------->*/
 			case prefix+'tiktok':
 			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
