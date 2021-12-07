@@ -255,7 +255,7 @@ Bot ini adalah Beta *Multi-Device* WhatsApp. Jika menemukan bug/eror pada bot in
 			    var rand2 = 'sticker/'+getRandom('.png')
 			    fs.writeFileSync(`./${rand1}`, buffer)
 			    if (isQuotedSticker && msg.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage.isAnimated !== true) {
-			    exec(`ffmpeg -i ${rand1} ${rand2}`, (err) => {
+			    exec(`ffmpeg -i ./${rand1} ./${rand2}`, (err) => {
 			      fs.unlinkSync(`./${rand1}`)
 			      if (err) return reply(mess.error.api)
 			      conn.sendMessage(from, { image: { url: `./${rand2}` }}, { quoted: msg })
