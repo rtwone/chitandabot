@@ -246,6 +246,7 @@ Bot ini adalah Beta *Multi-Device* WhatsApp. Jika menemukan bug/eror pada bot in
                               break
 			case prefix+'toimg': case prefix+'toimage':
 			case prefix+'tovid': case prefix+'tovideo':
+			    if (!isQuotedSticker) return reply(`Reply stikernya!`)
 			    var stream = await downloadContentFromMessage(msg.message.extendedTextMessage?.contextInfo.quotedMessage.stickerMessage, 'sticker')
 			    var buffer = Buffer.from([])
 			    for await(const chunk of stream) {
