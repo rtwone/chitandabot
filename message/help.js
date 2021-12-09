@@ -4,6 +4,8 @@ exports.allmenu = (conn, prefix, pushname) => {
 *Information Bot*
 ≻ ${prefix}menu
 ≻ ${prefix}donasi
+≻ ${prefix}speed
+≻ ${prefix}runtime
 
 *Converter/Tools*
 ≻ ${prefix}sticker
