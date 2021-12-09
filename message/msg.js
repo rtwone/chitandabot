@@ -139,7 +139,7 @@ module.exports = async(conn, msg, m, setting) => {
 		
 		const templateButtons = [
 			{ callButton: {displayText: `Call Owner!`, phoneNumber: `+6285791458996`} },
-			{ urlButton: { displayText: `Star & Fork in Github!`, url : `https://github.com/rtwone/WaBot-MD`} },
+			{ urlButton: { displayText: `Website!`, url : `https://irfanhariyanto.tk`} },
 			{ quickReplyButton: { displayText: `🧑 Owner`, id: `${prefix}owner` } },
 			{ quickReplyButton: { displayText: `💰 Donasi`, id: `${prefix}donate` } },
 			{ quickReplyButton: { displayText: `📋 All Menu`, id: `${prefix}allmenu` } }
