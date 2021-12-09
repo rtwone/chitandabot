@@ -24,7 +24,7 @@ const { state, saveState } = useSingleFileAuthState(session)
 function title() {
       console.clear()
 	console.log(chalk.bold.green(figlet.textSync('WabotMD', {
-		font: 'Ghost',
+		font: 'Standard',
 		horizontalLayout: 'default',
 		verticalLayout: 'default',
 		width: 80,
