@@ -30,7 +30,7 @@ function title() {
 		width: 80,
 		whitespaceBreak: false
 	})))
-	console.log(chalk.yellow(`\n                        ${chalk.yellow('[ Created By Irfan ]')}\n\n${chalk.red('Chitanda Eru Bot')} : ${chalk.white('WhatsApp Bot Multi Device')}\n${chalk.red('Follow Insta Dev')} : ${chalk.white('@yannnnn.zz_')}\n${chalk.red('Message Me On WhatsApp')} : ${chalk.white('+62 857-9145-8996')}\n${chalk.red('Donate')} : ${chalk.white('085791458996 ( Gopay/Pulsa )')}\n`))
+	console.log(chalk.yellow(`\n                        ${chalk.yellow('[ Created By Irfan ]')}\n\n${chalk.red('Script created by Irfan')} : ${chalk.white('WhatsApp Bot Multi Device')}\n${chalk.red('Follow Insta Dev')} : ${chalk.white('@yannnnn.zz_')}\n${chalk.red('Message Me On WhatsApp')} : ${chalk.white('+62 857-9145-8996')}\n${chalk.red('Donate')} : ${chalk.white('085791458996 ( Gopay/Pulsa )')}\n`))
 }
 
 /**
