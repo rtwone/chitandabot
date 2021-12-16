@@ -325,6 +325,11 @@ Bot ini adalah Beta *Multi-Device* WhatsApp. Jika menemukan bug/eror pada bot in
 			      conn.sendMessage(from, { audio: { url: data.nowm }, mimetype: 'audio/mp4' }, { quoted: msg })
 			    }).catch(() => reply(mess.error.api))
 		            break
+                        case prefix+'play':
+                            if (args.length < 2) return reply(`Kirim perintah ${command} query\nContoh : ${command} monokrom`)
+                            reply(mess.wait)
+                            await sendPlay(from, q)
+                            break
 			case prefix+'ytmp4': case prefix+'mp4':
 			    if (args.length < 2) return reply(`Kirim perintah ${command} link`)
 			    if (!isUrl(args[1])) return reply(mess.error.Iv)
