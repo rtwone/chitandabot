@@ -14,6 +14,7 @@ const ffmpeg = require("fluent-ffmpeg");
 const xfar = require('xfarr-api');
 const axios = require('axios')
 const hxz = require("hxz-api")
+const yts = require("yt-search")
 const speed = require("performance-now")
 
 // Database
@@ -111,6 +112,16 @@ module.exports = async(conn, msg, m, setting) => {
 		       return conn.sendMessage(from, { document: doc, mimetype: mime, caption: caption }, options)
 		    }
 		}
+                async function sendPlay(from, query) {
+                  var url = (await yts(query)).videos[0].url
+                  hxz.youtube(url).then(async(data) => {
+                  var button = [{ buttonId: `!ytmp3 ${url}`, buttonText: { displayText: `🎵 Audio (${data.size_mp3})` }, type: 1 }, { buttonId: `!ytmp4 ${url}`, buttonText: { displayText: `🎥 Video (${data.size})` }, type: 1 }]
+                  conn.sendMessage(from, { caption: `*Title :* ${data.title}\n*Quality :* ${data.quality}\n*Url :* https://youtu.be/${data.id}`, location: { jpegThumbnail: await getBuffer(data.thumb) }, buttons: button, footer: 'Pilih Salah Satu Button Dibawah⬇️', mentions: [sender] })
+                  }).catch((e) => {
+                    conn.sendMessage(from, { text: mess.error.api }, { quoted: msg })
+                    ownerNumber.map( i => conn.sendMessage(from, { text: `Send Play Error : ${e}` }))
+                  })
+                }
 		const isUrl = (url) => {
 			return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
 		}
@@ -331,7 +342,7 @@ Bot ini adalah Beta *Multi-Device* WhatsApp. Jika menemukan bug/eror pada bot in
 			    xfar.Youtube(args[1]).then( data => {
 			      var teks = `*Youtube Audio Downloader*\n\n*≻ Title :* ${data.title}\n*≻ Quality :* ${data.medias[7].quality}\n*≻ Size :* ${data.medias[7].formattedSize}\n*≻ Url Source :* ${data.url}\n\n_wait a minute sending media..._`
 			      conn.sendMessage(from, { image: { url: data.thumbnail }, caption: teks }, { quoted: msg })
-			      conn.sendMessage(from, { audio: { url: data.medias[7].url }, mimetype: 'audio/mp4' }, { quoted: msg })
+			      conn.sendMessage(from, { document: { url: data.medias[7].url }, fileName: `${data.title}.mp3`, mimetype: 'audio/mp3' }, { quoted: msg })
 			    }).catch(() => reply(mess.error.api))
 			    break
 			case prefix+'igdl': case prefix+'instagram': case prefix+'ig':
