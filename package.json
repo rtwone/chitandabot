@@ -1,6 +1,6 @@
 {
   "name": "chitanda-md",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Simple whatsapp bot with multi device.",
   "main": "index.js",
   "directories": {
