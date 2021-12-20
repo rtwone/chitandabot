@@ -216,7 +216,7 @@ module.exports = async(conn, msg, m, setting) => {
 		
 		const buttonsDefault = [
 			{ callButton: { displayText: `Call Owner!`, phoneNumber: `+6285791458996` } },
-			{ urlButton: { displayText: `Website!`, url : `https://irfanhariyanto.tk` } },
+			{ urlButton: { displayText: `Script!`, url : `https://github.com/rtwone/chitandabot` } },
 			{ quickReplyButton: { displayText: `🧑 Owner`, id: `${prefix}owner` } },
 			{ quickReplyButton: { displayText: `💰 Donasi`, id: `${prefix}donate` } }
 		]
