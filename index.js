@@ -15,6 +15,7 @@ const chalk = require('chalk')
 const logg = require('pino')
 const clui = require('clui')
 const { Spinner } = clui
+const { serialize } = require("./lib/myfunc");
 const { color, mylog, infolog } = require("./lib/color");
 const time = moment(new Date()).format('HH:mm:ss DD/MM/YYYY')
 let setting = JSON.parse(fs.readFileSync('./config.json'));
@@ -23,7 +24,7 @@ const { state, saveState } = useSingleFileAuthState(session)
 
 function title() {
       console.clear()
-	console.log(chalk.bold.green(figlet.textSync('WabotMD', {
+	  console.log(chalk.bold.green(figlet.textSync('WaBot MD', {
 		font: 'Standard',
 		horizontalLayout: 'default',
 		verticalLayout: 'default',
@@ -69,10 +70,10 @@ const connectToWhatsApp = async () => {
 	title()
 	
 	/* Auto Update */
-	require('./lib/color')
+	require('./message/help')
 	require('./lib/myfunc')
 	require('./message/msg')
-	nocache('./lib/color', module => console.log(chalk.greenBright('[ WHATSAPP BOT ]  ') + time + chalk.cyanBright(` "${module}" Telah diupdate!`)))
+	nocache('./message/help', module => console.log(chalk.greenBright('[ WHATSAPP BOT ]  ') + time + chalk.cyanBright(` "${module}" Telah diupdate!`)))
 	nocache('./lib/myfunc', module => console.log(chalk.greenBright('[ WHATSAPP BOT ]  ') + time + chalk.cyanBright(` "${module}" Telah diupdate!`)))
 	nocache('./message/msg', module => console.log(chalk.greenBright('[ WHATSAPP BOT ]  ') + time + chalk.cyanBright(` "${module}" Telah diupdate!`)))
 	
@@ -81,7 +82,9 @@ const connectToWhatsApp = async () => {
 	conn.prefa = 'anjing'
 	conn.ev.on('messages.upsert', async m => {
 		if (!m.messages) return;
-		const msg = m.messages[0]
+		var msg = m.messages[0]
+		msg = serialize(conn, msg)
+		msg.isBaileys = msg.key.id.startsWith('BAE5') || msg.key.id.startsWith('3EB0')
 		require('./message/msg')(conn, msg, m, setting)
 	})
 	conn.ev.on('connection.update', (update) => {
@@ -97,6 +100,9 @@ const connectToWhatsApp = async () => {
 		}
 	})
 	conn.ev.on('creds.update', () => saveState)
+	
+	conn.reply = (from, content, msg) => conn.sendMessage(from, { text: content }, { quoted: msg })
+
 	return conn
 }
 
