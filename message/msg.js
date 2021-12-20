@@ -3,7 +3,7 @@ const {
 	downloadContentFromMessage
 } = require("@adiwajshing/baileys-md")
 const { color, bgcolor } = require('../lib/color')
-const { getBuffer, fetchJson, fetchText, getRandom, getGroupAdmins, runtime, sleep, generateProfilePicture, makeid } = require("../lib/myfunc");
+const { getBuffer, fetchJson, fetchText, getRandom, getGroupAdmins, runtime, sleep, makeid } = require("../lib/myfunc");
 const { webp2mp4File } = require("../lib/convert")
 const { pinterest } = require("../lib/pinterest")
 const { isLimit, limitAdd, getLimit, giveLimit, addBalance, kurangBalance, getBalance, isGame, gameAdd, givegame, cekGLimit } = require("../lib/limit");
@@ -91,10 +91,10 @@ module.exports = async(conn, msg, m, setting) => {
 		const gcount = isPremium ? gcounti.prem : gcounti.user
 
 		const mentionByTag = type == "extendedTextMessage" && msg.message.extendedTextMessage.contextInfo != null ? msg.message.extendedTextMessage.contextInfo.mentionedJid : []
-        const mentionByReply = type == "extendedTextMessage" && msg.message.extendedTextMessage.contextInfo != null ? msg.message.extendedTextMessage.contextInfo.participant || "" : ""
-        const mention = typeof(mentionByTag) == 'string' ? [mentionByTag] : mentionByTag
-        mention != undefined ? mention.push(mentionByReply) : []
-        const mentionUser = mention != undefined ? mention.filter(n => n) : []
+                const mentionByReply = type == "extendedTextMessage" && msg.message.extendedTextMessage.contextInfo != null ? msg.message.extendedTextMessage.contextInfo.participant || "" : ""
+                const mention = typeof(mentionByTag) == 'string' ? [mentionByTag] : mentionByTag
+                mention != undefined ? mention.push(mentionByReply) : []
+                const mentionUser = mention != undefined ? mention.filter(n => n) : []
 		
 		async function downloadAndSaveMediaMessage (type_file, path_file) {
 			if (type_file === 'image') {
@@ -240,6 +240,9 @@ module.exports = async(conn, msg, m, setting) => {
 		  pendaftar.push(sender)
 		  fs.writeFileSync('./database/user.json', JSON.stringify(pendaftar, null, 2))
 		}
+		
+		// Premium
+		_prem.expiredCheck(conn, premium)
 
 		// Tictactoe
 		if (isTicTacToe(from, tictactoe)) tictac(chats, prefix, tictactoe, from, sender, reply, mentions, addBalance, balance)
