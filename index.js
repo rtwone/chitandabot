@@ -7,7 +7,7 @@ const {
 	AnyMessageContent,
 	useSingleFileAuthState,
 	delay
-} = require("@adiwajshing/baileys-md")
+} = require("@adiwajshing/baileys")
 const figlet = require("figlet");
 const fs = require("fs");
 const moment = require('moment')
