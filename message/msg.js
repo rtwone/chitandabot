@@ -1,7 +1,7 @@
 "use strict";
 const {
 	downloadContentFromMessage
-} = require("@adiwajshing/baileys-md")
+} = require("@adiwajshing/baileys")
 const { color, bgcolor } = require('../lib/color')
 const { getBuffer, fetchJson, fetchText, getRandom, getGroupAdmins, runtime, sleep, makeid } = require("../lib/myfunc");
 const { webp2mp4File } = require("../lib/convert")
