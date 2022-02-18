@@ -65,8 +65,25 @@ const status = new Spinner(chalk.cyan(` Booting WhatsApp Bot`))
 const starting = new Spinner(chalk.cyan(` Preparing After Connect`))
 const reconnect = new Spinner(chalk.redBright(` Reconnecting WhatsApp Bot`))
 
+const getWaVersion = async () => {
+    let version
+    try {
+      var data = await fetchJson(`https://web.whatsapp.com/check-update?version=1&platform=web`)
+      version = [currentVersion.replace(/[.]/g, ', ')]
+    } catch {
+      version = [2, 2204, 13]
+    }
+    return version
+}
+
 const connectToWhatsApp = async () => {
-	const conn = makeWASocket({ printQRInTerminal: true, logger: logg({ level: 'fatal' }), auth: state })
+	const conn = makeWASocket({
+            printQRInTerminal: true,
+            logger: logg({ level: 'fatal' }),
+            auth: state,
+            version: await getWaVersion(),
+            browser: ["Chitanda Eru Multi Device", "Safari", "3.0"]
+        })
 	title()
 	
 	/* Auto Update */
