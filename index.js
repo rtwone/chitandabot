@@ -1,3 +1,9 @@
+/**
+  * Edit features in './message/msg.js'
+  * Contact me on WhatsApp wa.me/6285791458996
+  * Follow https://github.com/rtwone
+*/
+
 "use strict";
 const {
 	default: makeWASocket,
