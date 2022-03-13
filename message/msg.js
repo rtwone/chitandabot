@@ -1,3 +1,9 @@
+/**
+  * Created by Irfan
+  * Contact me on WhatsApp wa.me/6285791458996
+  * Follow me on Instagram @yannnnn.zz_
+*/
+
 "use strict";
 const {
 	downloadContentFromMessage
