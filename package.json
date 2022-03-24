@@ -16,6 +16,7 @@
     "@adiwajshing/baileys": "github:adiwajshing/baileys",
     "@adiwajshing/keyed-db": "^0.2.4",
     "awesome-phonenumber": "^2.64.0",
+    "qrcode-terminal": "^0.12.0",
     "axios": "^0.24.0",
     "chalk": "^4.1.2",
     "clui": "^0.3.6",
