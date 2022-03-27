@@ -93,6 +93,8 @@ exports.allmenu = (sender, prefix, pushname, isOwner, isPremium, balance, limit,
   > evalcode
   x evalcode-2
   $ executor
+  ≻ ${prefix}join
+  ≻ ${prefix}broadcast
   ≻ ${prefix}setppbot
   ≻ ${prefix}exif
   ≻ ${prefix}leave
