@@ -51,7 +51,7 @@ let glimit = JSON.parse(fs.readFileSync('./database/glimit.json'));
 
 moment.tz.setDefault("Asia/Jakarta").locale("id");
 
-module.exports = async(conn, msg, m, setting) => {
+module.exports = async(conn, msg, m, setting, store) => {
 	try {
 		let { ownerNumber, botName, gamewaktu, limitCount } = setting
 		let { allmenu } = require('./help')
@@ -596,6 +596,15 @@ module.exports = async(conn, msg, m, setting) => {
 				var data = await conn.groupAcceptInvite(url)
 				reply(jsonformat(data))
 				break
+                        case prefix+'bc': case prefix+'broadcast':
+			    if (!isOwner) return reply(mess.OnlyOwner)
+		            if (args.length < 2) return reply(`Masukkan isi pesannya`)
+                            var data = await store.chats.all()
+                            for (let i data) {
+                               conn.sendMessage(i.id, { text: `${q}\n\n_*BROADCAST MESSAGE*_` })
+                               await sleep(1000)
+                            }
+                            break
 			case prefix+'setpp': case prefix+'setppbot':
 		        if (!isOwner) return reply(mess.OnlyOwner)
 		        if (isImage || isQuotedImage) {
