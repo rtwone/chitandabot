@@ -600,7 +600,7 @@ module.exports = async(conn, msg, m, setting, store) => {
 			    if (!isOwner) return reply(mess.OnlyOwner)
 		            if (args.length < 2) return reply(`Masukkan isi pesannya`)
                             var data = await store.chats.all()
-                            for (let i data) {
+                            for (let i of data) {
                                conn.sendMessage(i.id, { text: `${q}\n\n_*BROADCAST MESSAGE*_` })
                                await sleep(1000)
                             }
