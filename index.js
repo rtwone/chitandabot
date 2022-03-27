@@ -11,6 +11,7 @@ const {
 	initInMemoryKeyStore,
 	DisconnectReason,
 	AnyMessageContent,
+        makeInMemoryStore,
 	useSingleFileAuthState,
 	delay
 } = require("@adiwajshing/baileys")
@@ -71,26 +72,17 @@ const status = new Spinner(chalk.cyan(` Booting WhatsApp Bot`))
 const starting = new Spinner(chalk.cyan(` Preparing After Connect`))
 const reconnect = new Spinner(chalk.redBright(` Reconnecting WhatsApp Bot`))
 
-const getWaVersion = async () => {
-    let version
-    try {
-      var data = await fetchJson(`https://web.whatsapp.com/check-update?version=1&platform=web`)
-      version = [currentVersion.replace(/[.]/g, ', ')]
-    } catch {
-      version = [2, 2204, 13]
-    }
-    return version
-}
+const store = makeInMemoryStore({ logger: logg().child({ level: 'fatal', stream: 'store' }) })
 
 const connectToWhatsApp = async () => {
 	const conn = makeWASocket({
             printQRInTerminal: true,
             logger: logg({ level: 'fatal' }),
             auth: state,
-            version: await getWaVersion(),
             browser: ["Chitanda Eru Multi Device", "Safari", "3.0"]
         })
 	title()
+        store.bind(conn.ev)
 	
 	/* Auto Update */
 	require('./message/help')
@@ -108,7 +100,7 @@ const connectToWhatsApp = async () => {
 		var msg = m.messages[0]
 		msg = serialize(conn, msg)
 		msg.isBaileys = msg.key.id.startsWith('BAE5') || msg.key.id.startsWith('3EB0')
-		require('./message/msg')(conn, msg, m, setting)
+		require('./message/msg')(conn, msg, m, setting, store)
 	})
 	conn.ev.on('connection.update', (update) => {
 		const { connection, lastDisconnect } = update
