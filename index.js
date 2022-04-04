@@ -117,6 +117,10 @@ const connectToWhatsApp = async () => {
 	})
 	conn.ev.on('creds.update', () => saveState)
 	
+        conn.ev.on('group-participants.update', async (data) => {
+            console.log(data)
+        })
+
 	conn.reply = (from, content, msg) => conn.sendMessage(from, { text: content }, { quoted: msg })
 
 	return conn
