@@ -118,7 +118,22 @@ const connectToWhatsApp = async () => {
 	conn.ev.on('creds.update', () => saveState)
 	
         conn.ev.on('group-participants.update', async (data) => {
-            console.log(data)
+            try {
+              for (let i of data.participants) {
+                try {
+                  var pp_user = await conn.profilePictureUrl(i, 'image')
+                } catch {
+                  var pp_user = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+                }
+                if (data.action == "add") {
+                  conn.sendMessage(data.id, { image: { url: pp_user }, caption: `Welcome @${i.split("@")[0]}`, mentions: [i] })
+                } else if (data.action == "remove") {
+                  conn.sendMessage(data.id, { image: { url: pp_user }, caption: `Sayonara @${i.split("@")[0]}`, mentions: [i] })
+                }
+              }
+            } catch (e) {
+              console.log(e)
+            }
         })
 
 	conn.reply = (from, content, msg) => conn.sendMessage(from, { text: content }, { quoted: msg })
