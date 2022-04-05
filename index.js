@@ -29,6 +29,7 @@ const time = moment(new Date()).format('HH:mm:ss DD/MM/YYYY')
 let setting = JSON.parse(fs.readFileSync('./config.json'));
 let session = `./${setting.sessionName}.json`
 const { state, saveState } = useSingleFileAuthState(session)
+let welcome = JSON.parse(fs.readFileSync('./database/welcome.json'));
 
 function title() {
       console.clear()
@@ -101,7 +102,7 @@ const connectToWhatsApp = async () => {
 		var msg = m.messages[0]
 		msg = serialize(conn, msg)
 		msg.isBaileys = msg.key.id.startsWith('BAE5') || msg.key.id.startsWith('3EB0')
-		require('./message/msg')(conn, msg, m, setting, store)
+		require('./message/msg')(conn, msg, m, setting, store, welcome)
 	})
 	conn.ev.on('connection.update', (update) => {
 		const { connection, lastDisconnect } = update
@@ -118,6 +119,8 @@ const connectToWhatsApp = async () => {
 	conn.ev.on('creds.update', () => saveState)
 	
         conn.ev.on('group-participants.update', async (data) => {
+          const isWelcome = welcome.includes(data.id) ? true : false
+          if (isWelcome) {
             try {
               for (let i of data.participants) {
                 try {
@@ -134,6 +137,7 @@ const connectToWhatsApp = async () => {
             } catch (e) {
               console.log(e)
             }
+          }
         })
 
 	conn.reply = (from, content, msg) => conn.sendMessage(from, { text: content }, { quoted: msg })
