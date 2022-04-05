@@ -52,7 +52,7 @@ let glimit = JSON.parse(fs.readFileSync('./database/glimit.json'));
 
 moment.tz.setDefault("Asia/Jakarta").locale("id");
 
-module.exports = async(conn, msg, m, setting, store) => {
+module.exports = async(conn, msg, m, setting, store, welcome) => {
 	try {
 		let { ownerNumber, botName, gamewaktu, limitCount } = setting
 		let { allmenu } = require('./help')
@@ -93,6 +93,7 @@ module.exports = async(conn, msg, m, setting, store) => {
 		const isGroupAdmins = groupAdmins.includes(sender)
 		const isUser = pendaftar.includes(sender)
 		const isPremium = isOwner ? true : _prem.checkPremiumUser(sender, premium)
+                const isWelcome = isGroup ? welcome.includes(from) ? true : false : false
 
 		const gcounti = setting.gcount
 		const gcount = isPremium ? gcounti.prem : gcounti.user
@@ -880,6 +881,25 @@ module.exports = async(conn, msg, m, setting, store) => {
 		        groupMembers.map( i => mem.push(i.id) )
 				conn.sendMessage(from, { text: q ? q : '', mentions: mem })
 			    break
+                        case prefix+'welcome':
+                            if (!isGroup) return reply(mess.OnlyGrup)
+                            if (!isGroupAdmins && !isOwner) return reply(mess.GrupAdmin)
+                            if (args.length < 2) return reply(`Pilih enable atau disable`)
+                            if (args[1].toLowerCase() === "enable") {
+                              if (isWelcome) return reply(`Welcome sudah aktif`)
+                              welcome.push(from)
+                              fs.writeFileSync('./database/welcome.json', JSON.stringify(welcome, null, 2))
+                              reply(`Sukses mengaktifkan welcome di grup ini`)
+                            } else if (args[1].toLowerCase() === "disable") {
+                              if (!isWelcome) return reply(`Welcome sudah nonaktif`)
+                              var posi = welcome.indexOf(from)
+                              welcome.splice(posi, 1)
+                              fs.writeFileSync('./database/welcome.json', JSON.stringify(welcome, null, 2))
+                              reply(`Sukses menonaktifkan welcome di grup ini`)
+                            } else {
+                              reply(`Pilih enable atau disable`)
+                            }
+                            break
 			// Bank & Payment Menu
 			case prefix+'topbalance':{
                 balance.sort((a, b) => (a.balance < b.balance) ? 1 : -1)
