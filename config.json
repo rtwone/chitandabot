@@ -4,7 +4,7 @@
   "botName": "Chitanda Eru Bot",
   "sessionName": "rtwone-md",
   "pathimg": "./media/Chitanda.jpg",
-  "gamewaktu": 90,
+  "gamewaktu":. 90,
   "limitCount": 25,
   "gcount": {
 	"prem": 35,
