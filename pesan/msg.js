@@ -1,7 +1,7 @@
 /**
   * Created by Irfan
   * Contact me on WhatsApp wa.me/6285791458996
-  * Follow me on Instagram @yannnnn.zz_
+  * Follow me on Instagram @irfann._x
   * If you want to buy an updated script that is not encrypted, please WhatsApp me
 */
 
@@ -450,7 +450,7 @@ module.exports = async(conn, msg, m, setting, store, welcome) => {
 				   caption: `${data.title}\n\nKamu bisa mengubahnya menjadi Vidio Tanpa Watermark atau Audio, pencet tombol dibawah untuk mengubahnya!`,
 				   buttons: [{buttonId: `${prefix}tiktoknowm ${args[1]}`, buttonText: { displayText: "Without Watermark" }, type: 1 },
 					{buttonId: `${prefix}tiktokaudio ${args[1]}`, buttonText: { displayText: "Audio" }, type: 1 }],
-				   footer: "Create by @yannnnn.zz_"
+				   footer: "Create by @irfann._x"
 			      }, { quoted: msg })
 				  limitAdd(sender, limit)
 			    }).catch(() => reply(mess.error.api))
