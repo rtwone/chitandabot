@@ -1,6 +1,6 @@
 /**
   * Edit features in './message/msg.js'
-  * Contact me on WhatsApp wa.me/6285791458996
+  * Contact me on WhatsApp wa.me/6287776667664
   * Follow https://github.com/rtwone
   * If you want to buy an updated script that is not encrypted, please WhatsApp me
 */
