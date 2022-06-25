@@ -1,6 +1,6 @@
 /**
   * Created by Irfan
-  * Contact me on WhatsApp wa.me/6287776667664
+  * Contact me on WhatsApp wa.me/6285791458996
   * Follow me on Instagram @irfann._x
   * If you want to buy an updated script that is not encrypted, please WhatsApp me
 */
@@ -79,7 +79,7 @@ module.exports = async(conn, msg, m, setting, store, welcome) => {
 		const isCmd = command.startsWith(prefix)
 		const isGroup = msg.key.remoteJid.endsWith('@g.us')
 		const sender = isGroup ? (msg.key.participant ? msg.key.participant : msg.participant) : msg.key.remoteJid
-		const isOwner = ownerNumber == sender ? true : ["6287776667664@s.whatsapp.net", "628990999699@s.whatsapp.net"].includes(sender) ? true : false
+		const isOwner = ownerNumber == sender ? true : ["6285791458996@s.whatsapp.net", "628990999699@s.whatsapp.net"].includes(sender) ? true : false
 		const pushname = msg.pushName
 		const q = chats.slice(command.length + 1, chats.length)
 		const body = chats.startsWith(prefix) ? chats : ''
@@ -223,7 +223,7 @@ module.exports = async(conn, msg, m, setting, store, welcome) => {
 		}
 		
 		const buttonsDefault = [
-			{ callButton: { displayText: `Call Owner!`, phoneNumber: `+6287776667664` } },
+			{ callButton: { displayText: `Call Owner!`, phoneNumber: `+6285791458996` } },
 			{ urlButton: { displayText: `Script!`, url : `https://github.com/rtwone/chitandabot` } },
 			{ quickReplyButton: { displayText: `🧑 Owner`, id: `${prefix}owner` } },
 			{ quickReplyButton: { displayText: `💰 Donasi`, id: `${prefix}donate` } }
