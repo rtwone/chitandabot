@@ -151,3 +151,5 @@ const connectToWhatsApp = async () => {
 connectToWhatsApp()
 .catch(err => console.log(err))
 }
+
+fanStart()
