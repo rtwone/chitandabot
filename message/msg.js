@@ -1,6 +1,6 @@
 /**
   * Created by Irfan
-  * Contact me on WhatsApp wa.me/6285791458996
+  * Contact me on WhatsApp wa.me/628990999699
   * Follow me on Instagram @irfann._x
   * If you want to buy an updated script that is not encrypted, please WhatsApp me
 */
