@@ -103,6 +103,7 @@ const connectToWhatsApp = async () => {
 	conn.multi = true
 	conn.nopref = false
 	conn.prefa = 'anjing'
+	conn.mode = 'public'
 	conn.ev.on('messages.upsert', async m => {
 		if (!m.messages) return;
 		var msg = m.messages[0]
