@@ -243,6 +243,11 @@ module.exports = async(conn, msg, m, setting, store, welcome) => {
 		conn.sendReadReceipt(from, sender, [msg.key.id])
 		conn.sendPresenceUpdate('available', from)
 		
+		if (conn.mode === 'self') {
+                  if (!isOwner && !fromMe) return
+                  if (fromMe && isBaileys) return
+                }
+		
 		// Auto Registrasi
 		if (isCmd && !isUser) {
 		  pendaftar.push(sender)
@@ -618,6 +623,16 @@ module.exports = async(conn, msg, m, setting, store, welcome) => {
 				  reply(`Kirim/balas gambar dengan caption ${command} untuk mengubah foto profil bot`)
 				}
 				break
+			case prefix+'self':
+                           if (!isOwner && !fromMe) return reply(mess.OnlyOwner)
+                           conn.mode = 'self'
+                           reply(`Berhasil berubah ke mode Self!`)
+                           break
+			case prefix+'public': case prefix+'publik':
+                           if (!isOwner && !fromMe) return reply(mess.OnlyOwner)
+                           conn.mode = 'public'
+			reply(`Berhasil berubah ke mode Public!`)
+                   break
 			case prefix+'addprem':
                 if (!isOwner) return reply(mess.OnlyOwner)
                 if (args.length < 2) return reply(`Penggunaan :\n*${prefix}addprem* @tag waktu\n*${prefix}addprem* nomor waktu\n\nContoh : ${command} @tag 30d`)
