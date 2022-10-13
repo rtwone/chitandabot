@@ -1,5 +1,6 @@
 # WhatsApp Bot with Library Baileys MD
 
+Don't forget to follow and star🌟<dir>
 
 Jika ingin membeli script update nya, silahkan chat WhatsApp +62 899-0999-699<dir>
 Jangan kaget dengan harganya, bukan ingin cepat berangkat Haji, tetapi karena kualitasnya☝️😅
