@@ -13,7 +13,7 @@ const {
 	DisconnectReason,
 	AnyMessageContent,
         makeInMemoryStore,
-	useSingleFileAuthState,
+	useMultiFileAuthState,
 	delay
 } = require("@adiwajshing/baileys")
 const figlet = require("figlet");
