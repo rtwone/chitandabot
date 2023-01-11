@@ -2,7 +2,7 @@
 
 Don't forget to follow and star🌟<dir>
 
-Jika ingin membeli script update nya, silahkan chat WhatsApp +62 877-8777-72777<dir>
+Jika ingin membeli script update nya, silahkan chat WhatsApp +62 851-7522-2272dir>
 # Thanks to
 <a href="https://github.com/adiwajshing"><img src="https://github.com/adiwajshing.png?size=100" width="100" height="100"></a> | [![AQUL](https://github.com/zennn08.png?size=100)](https://github.com/zennn08) | [![FEBB](https://github.com/febbadityaN.png?size=100)](https://github.com/febbadityaN) | [![FAJAR](http://github.com/xfar05.png?size=100)](http://github.com/xfar05) | [![HXZ](http://github.com/Hexagonz.png?size=100)](http://github.com/Hexagonz) | [![KOTZ](http://github.com/Kotzyy.png?size=100)](http://github.com/Kotzyy) | [![RA](http://github.com/rayyreall.png?size=100)](http://github.com/rayyreall)
 ----|----|----|----|----|----|----
