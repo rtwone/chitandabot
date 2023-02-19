@@ -3,7 +3,6 @@
 Don't forget to follow and star🌟<dir>
 
 Jika ingin membeli script update nya, silahkan chat WhatsApp +62 851-7522-2272</dir>
-Tes This Bot [`Chitanda Eru Bot`](https://wa.me/628988889828)
 
 [`Join My WhatsApp Group`](https://chat.whatsapp.com/GfRg426F0RtE5s0XzFI6Oc)
 # Thanks to
