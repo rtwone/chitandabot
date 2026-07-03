@@ -2,9 +2,9 @@
 
 Don't forget to follow and star🌟<dir>
 
-Jika ingin membeli script update nya, silahkan chat WhatsApp +62 898-8898-828</dir>
+Jika ingin membeli script update nya, silahkan chat WhatsApp +62 898-8898-838</dir>
 
-Ingin membuat Bot WhatsApp mu sendiri? atau Bot WhatsApp usahamu? seperti Bot Laundry atau Bot Jualan produkmu, kamu bisa hubungi saya di [`wa.me/628988898828`](https://wa.me/628988898828)
+Ingin membuat Bot WhatsApp mu sendiri? atau Bot WhatsApp usahamu? seperti Bot Laundry atau Bot Jualan produkmu, kamu bisa hubungi saya di [`wa.me/628988898838`](https://wa.me/628988898838)
 
 [`Join My WhatsApp Group`](https://chat.whatsapp.com/FeIm2BuLmLxIUFWCMII9YL?mode=gi_t)
 # Thanks to
